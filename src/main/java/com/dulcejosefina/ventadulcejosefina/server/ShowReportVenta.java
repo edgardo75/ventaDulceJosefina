@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.dulcejosefina.ventadulcejosefina.server;
 
 import com.dulcejosefina.ejb.EJBVentaSucursalService;
@@ -16,26 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 import org.w3c.dom.Document;
-
-/**
- *
- * @author Edgardo
- */
 @WebServlet(name = "ShowReportVenta", urlPatterns = {"/ShowReportVenta"})
 public class ShowReportVenta extends HttpServlet {
-
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/EJBVentaSucursalService/EJBVentaSucursal.wsdl")
     private EJBVentaSucursalService service;
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setHeader("Cache-Control","no-cache");  //Para evitar el cache
@@ -48,18 +27,10 @@ public class ShowReportVenta extends HttpServlet {
         Long idVenta;
         Reportes reporte = new Reportes();
         nroVenta=request.getParameter("nroVenta");
-        idVenta=Long.valueOf(nroVenta);
-        
+        idVenta=Long.valueOf(nroVenta);        
         try {
-            
-      
-        
             com.dulcejosefina.ejb.EJBVentaSucursal port = service.getEJBVentaSucursalPort();
-       
-       
-            xml = port.selectUnaVenta(idVenta);
-            
-            
+            xml = port.selectUnaVenta(idVenta);       
             servletOutputStream = response.getOutputStream();
             Document documento = reporte.obtenerDocumentoParseado(xml);
             byte[] bytes = reporte.obtenerReporteJasper(documento, "/Lista/venta",reporte.obtenerVenta());

@@ -1,4 +1,5 @@
 package com.dulcejosefina.ventadulcejosefina.reporte;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -52,6 +53,7 @@ public class Reportes {
                              try {
                                     Map map = new HashMap();
                                     map.put("SUBREPORT_DIR","");
+                                     map.put("LOGO_DULCE", obtenerLogoDulce());
                                         bytes = JasperRunManager.runReportToPdf(nombreReporteJasper, map, xmlDataSource);                                        
                                 } catch (JRException e) {                                 
                                         StringWriter stringWriter = new StringWriter();
@@ -60,4 +62,7 @@ public class Reportes {
                                 }   
        return bytes;
    }
+    private String obtenerLogoDulce(){       
+        return PATH+"Images"+File.separator+"dulceJosefina.jpg";
+    }
 }
